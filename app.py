@@ -3,6 +3,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from flask import Flask, jsonify
+from flask_cors import CORS, cross_origin
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
@@ -37,7 +38,7 @@ def fetch_data():
 
 # Create a Flask app
 app = Flask(__name__)
-
+@cross_origin(origins='*',methods=['GET','OPTIONS',])
 @app.route('/api/properties', methods=['GET'])
 def get_properties():
     data = fetch_data()
