@@ -14,7 +14,7 @@ SPREADSHEET_RANGE = "B1:D4"
 
 def get_credentials():
     creds = service_account.Credentials.from_service_account_file(
-        "/etc/scopes/credentials.json", scopes=SCOPES
+        "/etc/secrets/credentials.json", scopes=SCOPES
     )
     return creds
 
