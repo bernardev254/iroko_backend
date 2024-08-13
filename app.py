@@ -2,7 +2,7 @@ import os.path
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS, cross_origin
 
 # If modifying these scopes, delete the file token.json.
@@ -42,7 +42,11 @@ app = Flask(__name__)
 @app.route('/api/properties', methods=['GET'])
 def get_properties():
     data = fetch_data()
-    return jsonify(data)
+    print("Data fetched from Google Sheets:", data)  # Add logging to check the response
+    response = make_response(jsonify(data))
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline';"
+    return response
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
