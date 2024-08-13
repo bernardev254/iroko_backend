@@ -43,7 +43,13 @@ app = Flask(__name__)
 def get_properties():
     data = fetch_data()
     print("Data fetched from Google Sheets:", data)  # Add logging to check the response
-    response = make_response(jsonify(data))
+    headers = data[0]
+    rows = data[1:]
+    processed_data = []
+    for row in rows:
+            obj = {headers[i]: row[i] for i in range(len(headers))}
+            processed_data.append(obj)
+    response = make_response(jsonify(processed_data))
     response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline';"
     return response
     
