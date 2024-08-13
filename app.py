@@ -10,11 +10,11 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 # The ID and range of your spreadsheet.
 SPREADSHEET_ID = "1626eTuIBWLlKEfjqSC_2BLSHMkdXrv_l8_Y7I7ycN4E"
-#SPREADSHEET_RANGE = "B1:D4"
+SPREADSHEET_RANGE = "B1:D4"
 
 def get_credentials():
     creds = service_account.Credentials.from_service_account_file(
-        "/etc/secrets/credentials.json", scopes=SCOPES
+        "/etc/scopes/credentials.json", scopes=SCOPES
     )
     return creds
 
@@ -25,7 +25,7 @@ def fetch_data():
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId=SPREADSHEET_ID, range='Sheet1')
+            .get(spreadsheetId=SPREADSHEET_ID, range=SPREADSHEET_RANGE)
             .execute()
         )
         values = result.get("values", [])
